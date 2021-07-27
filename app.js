@@ -55,5 +55,5 @@ app.get('/:id', (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`App is running on http://localhost:${PORT}`)
+  console.log(`The Express server is running on http://localhost:${PORT}`)
 })
