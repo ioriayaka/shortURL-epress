@@ -3,7 +3,8 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const validUrl = require('valid-url')
 const Url = require('./models/url')
-const baseUrl = 'http://localhost:3000/'
+let baseUrl 
+
 const filterShortUrl = require('./models/modifyUrl')
 
 require('./config/mongoose')
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 })
 app.post('/', (req, res) => {
   const inputUrl = req.body.inputUrl.trim()
+  console.log(req.headers.host)
   if (!validUrl.isUri(inputUrl)) {
     const errorMsg = 'Invalid URL! Please input valid URL.'
     return res.render('index', { errorMsg, inputUrl })
@@ -25,6 +27,11 @@ app.post('/', (req, res) => {
   if (validUrl.isUri(inputUrl)) {
     const randomUrl = filterShortUrl()
     const originalUrl = inputUrl
+    if (req.headers.host === 'localhost:3000') {
+      baseUrl = `http://${req.headers.host}/`
+    } else {
+      baseUrl = `https://${req.headers.host}/`
+    }
     const shortUrl = baseUrl + randomUrl
 
     Url.create({

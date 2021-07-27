@@ -1,7 +1,6 @@
 const Url = require('./url')
 
 function filterShortUrl() {
-  const baseUrl = 'http://localhost:3000/'
   let randomUrl = generateShortUrl(5)
   // let shortUrl = baseUrl + randomUrl
   Url.find({ randomUrl: randomUrl })
